@@ -1,7 +1,5 @@
-export interface Profile {
-    Onclick: () => void;
-    label: string;
-    logo: string;
+export interface ProfileProp {
+    avatarUrl: string;
     userName: string;
     userbio: string;
     edit: string;

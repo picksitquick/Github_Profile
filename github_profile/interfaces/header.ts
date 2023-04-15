@@ -1,9 +1,9 @@
-export interface Header {
-    homePage: string;
-    searchBar: string;
-    pullRequest: string;
-    issues: string;
-    codespace: string;
-    market: string;
-    explore: string;
+export interface HeaderProp {
+    logoUrl: string;
+    searchPlaceholder: string;
+    pullRequestsUrl: string;
+    issuesUrl: string;
+    codespacesUrl: string;
+    marketplaceUrl: string;
+    exploreUrl: string;
 }

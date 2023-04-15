@@ -1,6 +1,5 @@
-export interface Footer {
+export interface FooterProp {
     logo: string;
-    text: string;
     terms: string;
     privacy: string;
     security: string;
