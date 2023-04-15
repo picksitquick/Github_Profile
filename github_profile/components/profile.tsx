@@ -14,10 +14,10 @@ import React from "react";
 export const Profile: React.FC<ProfileProp> = (props : ProfileProp) => {
     
     return (
-        <div className="profile-pic h-screen p-10 bg-100">
-            <div className="col-2 col-md-12 mr-3 mr-md-0 m-12">
+        <div className="profile-pic h-screen bg-100 ml-16 mt-1">
+            <div className="col-2 col-md-12 mr-3 mr-md-0 mb-5">
                 <a href= "https://github.com/picksitquick">
-                    <img src = {props.avatarUrl} alt = "Profile Picture" />
+                    <img src = {props.avatarUrl} alt = "Profile Picture" className ="rounded-full w-72 h-72"/>
                 </a>
             </div>
             <div>
@@ -29,8 +29,8 @@ export const Profile: React.FC<ProfileProp> = (props : ProfileProp) => {
                 border-gray-300 outline">Edit Profile</button>
             </div>
             <div className="mb-3">
-                <span className="bold text-gray-200 hover:text-blue-700">{props.followers} followers</span>
-                <span className="bold text-gray-200 hover:text-blue-700">{props.following} following</span>
+                <span className="bold text-gray-200 hover:text-blue-700 mr-2">{props.followers} followers</span>
+                <span className="bold text-gray-200 hover:text-blue-700 mb-2">{props.following} following</span>
             </div>
         </div>
     );

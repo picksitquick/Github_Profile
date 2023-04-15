@@ -1,38 +1,15 @@
-import { Footer } from "@/components/footer";
 import { Header } from "@/components/header";
+import { RepositoryList } from "@/components/repo";
+import { RepoProp } from "@/interfaces/repo";
+import { Footer } from "@/components/footer";
 import { InnerNav } from "@/components/navbar";
-import { Profile } from "@/components/profile";
-import { useEffect, useState } from "react";
-import Link from "next/link";
 
-interface User{
-    avatar_url: string;
-    followers: string;
-    following: string;
-    name: string;
-    public_repos: string;
-    starred_url: string;
+interface RepoPageProp{
+    repositories: RepoProp[];
 }
 
-
-const ProfilePage = () => {
-    const [user , setUser] = useState<User | null>(null);
-    useEffect(() => {
-        async function fetchUser() {
-            const response = await fetch("https://api.github.com/users/picksitquick");
-            const data = await response.json();
-            setUser(data);
-        }
-        fetchUser();
-        },
-    []);
-
-    if(!user){
-        return <div>Loading.....</div>;
-    }
-
+const RepositoryPage:React.FC<RepoPageProp> = ({repositories}) => {
     return (
-       
         <div>
             <Header 
                 logoUrl = "https://github.com/fluidicon.png"
@@ -45,22 +22,15 @@ const ProfilePage = () => {
             />
 
             <InnerNav 
-                overview = ""
+                overview = "/profile"
                 repo = "/repository"
-                stars = {user.starred_url}
+                stars = ""
                 projects = ""
                 packages = ""
-                repoCount = {user.public_repos}
+                repoCount = ""
             />
 
-            <Profile 
-                avatarUrl = {user.avatar_url}
-                userName = {user.name}
-                userbio = "picksitquick"
-                edit = ""
-                followers = {user.followers}
-                following = {user.following}
-            />
+            <RepositoryList repositories={repositories} />
 
             <Footer 
                 logo= "https://github.com/fluidicon.png"
@@ -80,4 +50,15 @@ const ProfilePage = () => {
     );
 };
 
-export default ProfilePage;
+export async function getServerSideProps() {
+    const response = await fetch("https://api.github.com/users/picksitquick/repos");
+    const repositories: RepoProp[] = await response.json();
+
+    return {
+        props: {
+            repositories,
+        },
+    };
+}
+
+export default RepositoryPage;

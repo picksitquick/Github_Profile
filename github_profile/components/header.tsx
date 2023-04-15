@@ -4,7 +4,7 @@ import {HeaderProp} from "../interfaces/header";
 export const Header: React.FC<HeaderProp> = (props : HeaderProp) => {
     return (
         <nav className="bg-gray-600 p-3">
-            <div className="container mx-auto flex items-center justify-between">
+            <div className="container mx-auto flex items-center">
                 <div className="flex items-center">
                     <a href="/">
                         <img src={props.logoUrl} alt="Logo" className="h-6"/>
