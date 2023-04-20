@@ -20,8 +20,9 @@ const RepositoryPage:React.FC<RepoPageProp> = ({repositories}) => {
                 marketplaceUrl= "https://github.com/marketplace"
                 exploreUrl= "https://github.com/explore"
             />
-
-            <InnerNav 
+            
+            
+            <InnerNav
                 overview = "/profile"
                 repo = "/repository"
                 stars = ""

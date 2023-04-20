@@ -1,5 +1,6 @@
 export interface RepoProp{
     name: string;
     description: string;
-    repo_url: string;
+    repos_url: string;
+    html_url: string;
 }

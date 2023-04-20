@@ -34,7 +34,7 @@ const ProfilePage = () => {
     return (
        
         <div>
-            <Header 
+            {/* <Header 
                 logoUrl = "https://github.com/fluidicon.png"
                 searchPlaceholder= "Search or jump to..."
                 pullRequestsUrl= "https://github.com/pulls"
@@ -42,7 +42,7 @@ const ProfilePage = () => {
                 codespacesUrl= "https://github.com/codespaces"
                 marketplaceUrl= "https://github.com/marketplace"
                 exploreUrl= "https://github.com/explore"
-            />
+            /> */}
 
             <InnerNav 
                 overview = ""
