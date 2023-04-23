@@ -2,7 +2,7 @@ import { Footer } from "@/components/footer";
 import { Header } from "@/components/header";
 import { InnerNav } from "@/components/navbar";
 import { Profile } from "@/components/profile";
-import { useEffect, useState } from "react";
+import { SetStateAction, useEffect, useState } from "react";
 import Link from "next/link";
 
 interface User{
@@ -12,24 +12,32 @@ interface User{
     name: string;
     public_repos: string;
     starred_url: string;
+    bio: string;
 }
 
-
-const ProfilePage = () => {
+function ProfilePage(){
+    const [username , setUsername] = useState('picksitquick');
     const [user , setUser] = useState<User | null>(null);
+    const [inputValue , setInputValue] = useState('');
+
+    const handleInputChange = (event: { preventDefault: () => void; target: { value: SetStateAction<string>; }; }) => {
+        event.preventDefault();
+        setInputValue(event.target.value);
+    }
+
+    const handleSubmit = async (event: { preventDefault: () => void; }) =>{
+        event.preventDefault();
+        setUsername(inputValue);
+    }
+
     useEffect(() => {
-        async function fetchUser() {
-            const response = await fetch("https://api.github.com/users/picksitquick");
+        const fetchUser = async () => {
+            const response = await fetch(`https://api.github.com/users/${username}`);
             const data = await response.json();
             setUser(data);
-        }
+        };
         fetchUser();
-        },
-    []);
-
-    if(!user){
-        return <div>Loading.....</div>;
-    }
+    }, [username]);
 
     return (
        
@@ -43,25 +51,35 @@ const ProfilePage = () => {
                 marketplaceUrl= "https://github.com/marketplace"
                 exploreUrl= "https://github.com/explore"
             /> */}
-
-            <InnerNav 
-                overview = ""
-                repo = "/repository"
-                stars = {user.starred_url}
-                projects = ""
-                packages = ""
-                repoCount = {user.public_repos}
-            />
-
+            
+            <div className="flex border-b mb-4 ml-2">
+                <div className="justify-between mt-6">
+                    <form onSubmit={handleSubmit}>
+                        <input value={inputValue} onChange={handleInputChange} className="mr-2 bg-gray-800 rounded-lg px-3 py-1 text-sm w-48 focus:outline-none text-white" type="text" placeholder="Enter Username"></input>
+                        <button type='submit' className="bg-green-500 hover:bg-green-600 text-gray-800 font-bold py-1 px-4 rounded-full border border-green-200">Submit</button>
+                    </form>
+                </div>
+                {user && (
+                <InnerNav 
+                    overview = ""
+                    repo = "/repository"
+                    stars = {user.starred_url ? user.starred_url : "Not Available"}
+                    projects = ""
+                    packages = ""
+                    repoCount = {user.public_repos ? user.public_repos : "Not Available"}
+                />
+                )}
+            </div>
+            {user && (
             <Profile 
                 avatarUrl = {user.avatar_url}
                 userName = {user.name}
-                userbio = "picksitquick"
+                userbio = {user.bio}
                 edit = ""
                 followers = {user.followers}
                 following = {user.following}
             />
-
+                )}
             <Footer 
                 logo= "https://github.com/fluidicon.png"
                 terms= "https://docs.github.com/site-policy/github-terms/github-terms-of-service"
