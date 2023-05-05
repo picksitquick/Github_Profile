@@ -1,14 +1,15 @@
 import React from "react";
 import {HeaderProp} from "../interfaces/header";
+import Link from "next/link";
 
 export const Header: React.FC<HeaderProp> = (props : HeaderProp) => {
     return (
         <nav className="bg-gray-600 p-3">
             <div className="container mx-auto flex items-center">
                 <div className="flex items-center">
-                    <a href="/">
+                    <Link href="/">
                         <img src={props.logoUrl} alt="Logo" className="h-6"/>
-                    </a>
+                    </Link  >
                     <form className="ml-4">
                         <input
                         type="text"

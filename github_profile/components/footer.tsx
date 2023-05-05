@@ -1,13 +1,14 @@
 import { FooterProp } from "@/interfaces/footer";
+import Link from "next/link";
 
 export const Footer: React.FC<FooterProp> = (props:FooterProp) => {
     return (
         <nav className="bg-gray-900 p-9 border-t border-white">
             <div className="container mx-auto flex items-center justify-between">
                 <div className="flex items-center">
-                    <a href="/">
+                    <Link href="/">
                         <img src={props.logo} alt="© 2023 GitHub, Inc." className="h-6" />
-                    </a>
+                    </Link>
                     <p className="p-2 text-xs">© 2023 GitHub, Inc.</p>
                 </div>
                 <div className="flex text-center">

@@ -79,7 +79,7 @@ const RepositoryPage:React.FC<RepoPageProp> = ({repositories}) => {
             </div>
             
 
-            <div className="flex-shrink-0">
+            <div className="flex flex-shrink-0">
                 <Footer 
                     logo= "https://github.com/fluidicon.png"
                     terms= "https://docs.github.com/site-policy/github-terms/github-terms-of-service"
