@@ -4,6 +4,8 @@ import { RepoProp } from "@/interfaces/repo";
 import { Footer } from "@/components/footer";
 import { InnerNav } from "@/components/navbar";
 import { useState , useEffect, SetStateAction } from "react";
+import { Snackbar } from "@mui/material";
+import {Alert} from "@mui/material";
 
 interface User{
     public_repos: string;
@@ -18,6 +20,8 @@ const RepositoryPage:React.FC<RepoPageProp> = ({repositories}) => {
     const [user , setUser] = useState<User | null>(null);
     const [repoData , setRepodata] = useState([]);
     const [inputValue , setInputValue] = useState('');
+    // const [open , setOpen] = useState(false);
+    const [error , setError] = useState(false);
 
     const handleInputChange = (event: { preventDefault: () => void; target: { value: SetStateAction<string>; }; }) => {
         event.preventDefault();
@@ -26,15 +30,19 @@ const RepositoryPage:React.FC<RepoPageProp> = ({repositories}) => {
 
     const handleSubmit = async (event: { preventDefault: () => void; }) =>{
         event.preventDefault();
-        setUsername(inputValue);
+        inputValue === '' ? setError(true) : setUsername(inputValue);
     }
 
-    useEffect(() => {
+    const handleClose = () => {
+        setError(false);
+    }
+
+    useEffect(() => {  
         const fetchUser = async () => {
             const response = await fetch(`https://api.github.com/users/${username}`);
             const data = await response.json();
             setUser(data);
-
+            
             const repoList = await fetch(`https://api.github.com/users/${username}/repos`);
             const repoData = await repoList.json();
             setRepodata(repoData);
@@ -64,6 +72,20 @@ const RepositoryPage:React.FC<RepoPageProp> = ({repositories}) => {
                         <input value={inputValue} onChange={handleInputChange} className="mr-2 bg-gray-800 rounded-lg px-3 py-1 text-sm w-48 focus:outline-none text-white" type="text" placeholder="Enter Username"></input>
                         <button type='submit' className="bg-green-500 hover:bg-green-600 text-gray-800 font-bold py-1 px-4 rounded-full border border-green-200">Submit</button>
                     </form>
+                    {/* <Snackbar 
+                        open={open}
+                        autoHideDuration={6000}
+                        onClose={handleClose}
+                        message="Field Cannot be blank."/> */
+                        error && (
+                            <Alert severity="error" onClose={()=>setError(false)}>
+                                Field cannot be empty!!
+                            </Alert>
+                        )
+                        
+                    }
+                    
+
                 </div>
                 <InnerNav
                     overview = "/profile"
@@ -79,7 +101,7 @@ const RepositoryPage:React.FC<RepoPageProp> = ({repositories}) => {
             </div>
             
 
-            <div className="flex flex-shrink-0">
+            <div className="flex-shrink-0">
                 <Footer 
                     logo= "https://github.com/fluidicon.png"
                     terms= "https://docs.github.com/site-policy/github-terms/github-terms-of-service"
